@@ -1,8 +1,16 @@
 import { Markup } from "telegraf";
 import { GigModel } from "../../models/gig.js";
-import { categories } from "../../utils/constants.js";
 
 const PAGE_SIZE = 5;
+
+const categories = [
+  "Delivery",
+  "Service",
+  "Maintenance",
+  "Cleaning",
+  "Design",
+  "Other",
+];
 
 export const categoriesCommand = (bot) => {
   bot.command("categories", async (ctx) => {

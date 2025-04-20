@@ -1,12 +1,20 @@
 import { Markup } from "telegraf";
 import { GigModel } from "../../models/gig.js";
-import { categories } from "../../utils/constants.js";
 
 const sessions = {}; // In-memory session store
 
 // Rate limit config
 const rateLimitMap = new Map();
 const RATE_LIMIT_INTERVAL_MS = 60 * 1000;
+
+const categories = [
+  "Delivery",
+  "Service",
+  "Maintenance",
+  "Cleaning",
+  "Design",
+  "Other",
+];
 
 export const postGigCommand = (bot) => {
   bot.command("postgig", async (ctx) => {
