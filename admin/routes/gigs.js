@@ -25,7 +25,7 @@ const router = express.Router();
 // });
 
 // GET gigs (paginated) route
-router.get("/admin/gigs", async (req, res) => {
+router.get("/gigs", async (req, res) => {
   const page = parseInt(req.query.page) || 1;
   const limit = 6;
 
