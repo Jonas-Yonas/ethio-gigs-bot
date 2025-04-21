@@ -26,7 +26,7 @@ const corsOptions = {
 };
 
 // Middleware
-app.use("*", cors(corsOptions));
+app.use(cors(corsOptions));
 app.use(express.json());
 
 // Routes
