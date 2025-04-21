@@ -18,6 +18,7 @@ const categorySelection = (bot, sessions) => {
       category,
       telegramId: userId,
       telegramUsername: ctx.from.username || "",
+      moderationStatus: "pending",
     });
 
     await newGig.save();

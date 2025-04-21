@@ -7,11 +7,24 @@ const gigSchema = new mongoose.Schema(
     description: { type: String, required: true },
     price: { type: Number, required: true },
     category: { type: String, required: true },
-    status: { type: String, default: "active" },
+
     username: { type: String, required: true },
     views: {
       type: Number,
       default: 0,
+    },
+    // Status of the gig lifecycle (active = available, expired = completed)
+    status: {
+      type: String,
+      enum: ["active", "expired"],
+      default: "active",
+    },
+
+    // NEW: Moderation status for approval/rejection
+    moderationStatus: {
+      type: String,
+      enum: ["pending", "approved", "rejected"],
+      default: "pending", // 🆕 default to pending on new gig creation
     },
   },
   { timestamps: true }

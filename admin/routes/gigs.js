@@ -24,18 +24,19 @@ const router = express.Router();
 //   }
 // });
 
-// GET gigs (paginated) route
+// GET gigs (paginated, filterable by moderationStatus) route
 router.get("/", async (req, res) => {
   const page = parseInt(req.query.page) || 1;
   const limit = 6;
+  const moderationStatus = req.query.status || "approved"; // default to 'approved'
 
   try {
-    const gigs = await GigModel.find()
+    const gigs = await GigModel.find({ moderationStatus })
       .skip((page - 1) * limit)
       .limit(limit)
       .sort({ createdAt: -1 });
 
-    const total = await GigModel.countDocuments();
+    const total = await GigModel.countDocuments({ moderationStatus });
     const totalPages = Math.ceil(total / limit);
 
     res.json({ gigs, totalPages });
@@ -44,6 +45,26 @@ router.get("/", async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 });
+
+// router.get("/", async (req, res) => {
+//   const page = parseInt(req.query.page) || 1;
+//   const limit = 6;
+
+//   try {
+//     const gigs = await GigModel.find()
+//       .skip((page - 1) * limit)
+//       .limit(limit)
+//       .sort({ createdAt: -1 });
+
+//     const total = await GigModel.countDocuments();
+//     const totalPages = Math.ceil(total / limit);
+
+//     res.json({ gigs, totalPages });
+//   } catch (error) {
+//     console.error("❌ Failed to fetch gigs:", error);
+//     res.status(500).json({ message: "Server error" });
+//   }
+// });
 
 // GET a gig by id route
 router.get("/:id", async (req, res) => {

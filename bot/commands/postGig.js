@@ -92,6 +92,7 @@ export const postGigCommand = (bot) => {
       telegramId: userId,
       telegramUsername: ctx.from.username || "",
       username: ctx.from.username || "unknown",
+      moderationStatus: "pending",
     });
 
     await newGig.save();
