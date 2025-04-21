@@ -24,7 +24,6 @@ const corsOptions = {
   methods: ["GET", "POST", "PATCH", "DELETE", "PUT"],
   credentials: true,
 };
-app.use(cors(corsOptions));
 
 // Middleware
 app.use(cors(corsOptions));
