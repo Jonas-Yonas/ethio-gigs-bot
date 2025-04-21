@@ -9,7 +9,10 @@ const PORT = process.env.PORT || 3001;
 
 // CORS configuration
 const corsOptions = {
-  origin: "http://localhost:3000", // Allow requests from frontend
+  origin: [
+    "http://localhost:3000", // Local dev
+    "https://ethio-gigs-admin.vercel.app", // Vercel frontend
+  ], // Allow requests from frontend
   methods: ["GET", "POST", "PATCH", "DELETE", "PUT"], // Allow these methods
   credentials: true,
 };

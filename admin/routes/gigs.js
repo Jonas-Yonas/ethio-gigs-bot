@@ -3,6 +3,27 @@ import { GigModel } from "../../models/gig.js";
 
 const router = express.Router();
 
+// Index page (/)
+// router.get("/", async (req, res) => {
+//   const page = parseInt(req.query.page) || 1;
+//   const limit = 6;
+
+//   try {
+//     const gigs = await GigModel.find()
+//       .skip((page - 1) * limit)
+//       .limit(limit)
+//       .sort({ createdAt: -1 });
+
+//     const total = await GigModel.countDocuments();
+//     const totalPages = Math.ceil(total / limit);
+
+//     res.json({ gigs, totalPages });
+//   } catch (error) {
+//     console.error("❌ Failed to fetch gigs:", error);
+//     res.status(500).json({ message: "Server error" });
+//   }
+// });
+
 // GET gigs (paginated) route
 router.get("/admin/gigs", async (req, res) => {
   const page = parseInt(req.query.page) || 1;
