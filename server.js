@@ -8,14 +8,23 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 
 // CORS configuration
+const allowedOrigins = [
+  "http://localhost:3000", // Local dev
+  "https://ethio-gigs-admin.vercel.app", // Vercel frontend
+];
+
 const corsOptions = {
-  origin: [
-    "http://localhost:3000", // Local dev
-    "https://ethio-gigs-admin.vercel.app", // Vercel frontend
-  ], // Allow requests from frontend
-  methods: ["GET", "POST", "PATCH", "DELETE", "PUT"], // Allow these methods
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  methods: ["GET", "POST", "PATCH", "DELETE", "PUT"],
   credentials: true,
 };
+app.use(cors(corsOptions));
 
 // Middleware
 app.use(cors(corsOptions));
