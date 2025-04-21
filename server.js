@@ -31,7 +31,7 @@ app.use(cors(corsOptions));
 app.use(express.json());
 
 // Routes
-app.use("/gigs", gigsRouter); // Frontend will call this
+app.use("/admin/gigs", gigsRouter); // Frontend will call this
 
 // Start DB, bot, and server
 const start = async () => {
