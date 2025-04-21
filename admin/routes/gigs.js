@@ -4,7 +4,7 @@ import { GigModel } from "../../models/gig.js";
 const router = express.Router();
 
 // GET gigs (paginated) route
-router.get("/", async (req, res) => {
+router.get("/admin/gigs", async (req, res) => {
   const page = parseInt(req.query.page) || 1;
   const limit = 6;
 
