@@ -87,12 +87,12 @@ export const postGigCommand = (bot) => {
     const newGig = new GigModel({
       title: session.data.title,
       description: session.data.description,
-      price: session.data.price, // ✅ corrected
+      price: session.data.price,
       category: session.data.category,
       telegramId: userId,
       telegramUsername: ctx.from.username || "",
       username: ctx.from.username || "unknown",
-      moderationStatus: "pending",
+      moderationStatus: "Pending",
     });
 
     await newGig.save();

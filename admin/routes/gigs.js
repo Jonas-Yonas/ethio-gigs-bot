@@ -3,40 +3,27 @@ import { GigModel } from "../../models/gig.js";
 
 const router = express.Router();
 
-// Index page (/)
-// router.get("/", async (req, res) => {
-//   const page = parseInt(req.query.page) || 1;
-//   const limit = 6;
-
-//   try {
-//     const gigs = await GigModel.find()
-//       .skip((page - 1) * limit)
-//       .limit(limit)
-//       .sort({ createdAt: -1 });
-
-//     const total = await GigModel.countDocuments();
-//     const totalPages = Math.ceil(total / limit);
-
-//     res.json({ gigs, totalPages });
-//   } catch (error) {
-//     console.error("❌ Failed to fetch gigs:", error);
-//     res.status(500).json({ message: "Server error" });
-//   }
-// });
-
 // GET gigs (paginated, filterable by moderationStatus) route
 router.get("/", async (req, res) => {
   const page = parseInt(req.query.page) || 1;
   const limit = 6;
-  const moderationStatus = req.query.status || "approved"; // default to 'approved'
+  const moderationFilter = req.query.moderationFilter || "Approved"; // default to 'Approved'
+
+  // Create the query object
+  const query = {};
+
+  // Only add moderationStatus to query if filter is not "All"
+  if (moderationFilter !== "All") {
+    query.moderationStatus = moderationFilter;
+  }
 
   try {
-    const gigs = await GigModel.find({ moderationStatus })
+    const gigs = await GigModel.find(query)
       .skip((page - 1) * limit)
       .limit(limit)
       .sort({ createdAt: -1 });
 
-    const total = await GigModel.countDocuments({ moderationStatus });
+    const total = await GigModel.countDocuments(query);
     const totalPages = Math.ceil(total / limit);
 
     res.json({ gigs, totalPages });
@@ -45,26 +32,6 @@ router.get("/", async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 });
-
-// router.get("/", async (req, res) => {
-//   const page = parseInt(req.query.page) || 1;
-//   const limit = 6;
-
-//   try {
-//     const gigs = await GigModel.find()
-//       .skip((page - 1) * limit)
-//       .limit(limit)
-//       .sort({ createdAt: -1 });
-
-//     const total = await GigModel.countDocuments();
-//     const totalPages = Math.ceil(total / limit);
-
-//     res.json({ gigs, totalPages });
-//   } catch (error) {
-//     console.error("❌ Failed to fetch gigs:", error);
-//     res.status(500).json({ message: "Server error" });
-//   }
-// });
 
 // GET a gig by id route
 router.get("/:id", async (req, res) => {
@@ -91,9 +58,6 @@ router.get("/:id", async (req, res) => {
 // POST gig route
 router.post("/", async (req, res) => {
   try {
-    // const { title, description, price, category, username, telegramId } =
-    //   req.body;
-    // const newGig = new GigModel({ title, description, price, category, username, telegramId });
     const newGig = new GigModel({ ...req.body });
 
     await newGig.save();

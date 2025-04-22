@@ -23,8 +23,8 @@ const gigSchema = new mongoose.Schema(
     // NEW: Moderation status for approval/rejection
     moderationStatus: {
       type: String,
-      enum: ["pending", "approved", "rejected"],
-      default: "pending", // 🆕 default to pending on new gig creation
+      enum: ["Pending", "Approved", "Rejected"],
+      default: "Pending", // 🆕 default to pending on new gig creation
     },
   },
   { timestamps: true }
